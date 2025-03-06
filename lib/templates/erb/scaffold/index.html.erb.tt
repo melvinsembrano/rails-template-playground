@@ -1,0 +1,40 @@
+<section>
+  <header>
+    <h1><%= human_name.pluralize %></h1>
+  </header>
+
+  <%% content_for :title, "<%= human_name.pluralize %>" %>
+
+  <%% if notice %>
+    <div class="notice"><%%= notice %></div>
+  <%% end %>
+
+  <div id="<%= plural_table_name %>">
+
+    <table>
+      <thead>
+        <tr>
+          <% attributes.each do |attribute| %>
+          <th scope="col"><%%= t(".<%= attribute.name %>") %></th>
+          <% end %>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
+        <tr>
+          <% attributes.each_with_index do |attribute, index| %>
+          <% if index == 0 %><th scope="row"><%%= <%= "#{singular_table_name}.#{attribute.name}" %> %></th><% else %><td><%%= <%= "#{singular_table_name}.#{attribute.name}" %> %></td><% end %>
+          <% end %>
+          <td>
+            <%%= link_to t(".show"), <%= model_resource_name(singular_table_name) %> %>
+            <%%= link_to t(".edit"), [:edit, <%= model_resource_name(singular_table_name) %>] %>
+          </td>
+        </tr>
+        <%% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <%%= link_to "New <%= human_name.downcase %>", <%= new_helper(type: :path) %> %>
+</section>
