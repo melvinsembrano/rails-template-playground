@@ -1,4 +1,4 @@
-<section>
+<article>
   <header>
     <h1><%= human_name.pluralize %></h1>
   </header>
@@ -37,4 +37,4 @@
   </div>
 
   <%%= link_to "New <%= human_name.downcase %>", <%= new_helper(type: :path) %> %>
-</section>
+</article>

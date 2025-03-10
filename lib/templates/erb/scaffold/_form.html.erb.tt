@@ -1,0 +1,46 @@
+<section>
+  <%%= form_with(model: <%= model_resource_name %>) do |form| %>
+    <%% if <%= singular_table_name %>.errors.any? %>
+      <div class="error">
+        <h2><%%= pluralize(<%= singular_table_name %>.errors.count, "error") %> prohibited this <%= singular_table_name %> from being saved:</h2>
+
+        <ul>
+          <%% <%= singular_table_name %>.errors.each do |error| %>
+            <li><%%= error.full_message %></li>
+          <%% end %>
+        </ul>
+      </div>
+    <%% end %>
+    <fieldset>
+<% attributes.each do |attribute| -%>
+      <div>
+<% if attribute.password_digest? %>
+        <%%= form.label :password do %>
+          <%%= t(".password") %>
+          <%%= form.password_field :password %>
+        <%% end %>
+      </div>
+      <div>
+        <%%= form.label :password_confirmation do %>
+          <%%= t(".password_confirmation") %>
+          <%%= form.password_field :password_confirmation %>
+        <%% end %>
+<% elsif attribute.attachments? %>
+        <%%= form.label :<%= attribute.column_name %> do %>
+          <%%= t(".<%= attribute.column_name %>") %>
+          <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %>, multiple: true %>
+        <%% end %>
+<% else -%>
+        <%%= form.label :<%= attribute.column_name %> do %>
+          <%%= t(".<%= attribute.column_name %>") %>
+          <%%= form.<%= attribute.field_type %> :<%= attribute.column_name %> %>
+        <%% end %>
+<% end -%>
+      </div>
+<% end -%>
+    </fieldset>
+    <div>
+      <%%= form.submit %>
+    </div>
+  <%% end %>
+</section>
